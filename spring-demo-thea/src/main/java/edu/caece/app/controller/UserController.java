@@ -87,6 +87,7 @@ public class UserController {
 				_user.setEmail(user.getEmail());
 				_user.setUsername(user.getUsername());
 				_user.setRoles(user.getRoles());
+				_user.setPhotos(user.getPhotos());
 				
 				result.setMessage(null);
 				result.setSuccess(true);

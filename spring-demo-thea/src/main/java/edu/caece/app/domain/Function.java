@@ -38,7 +38,13 @@ public class Function {
 		this.person = new HashSet<Person>();
 		this.name = name;
 	}
-
+	
+	public Function(long id, String name) {
+		this.person = new HashSet<Person>();
+		this.id = id;
+		this.name = name;
+	}
+	
 	public long getId() {
 		return id;
 	}
