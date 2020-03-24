@@ -44,7 +44,7 @@ public class Person {
 	private Set<PersonLog> registrations;
 
 	@JoinTable(name = "persons_functions", joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "function_id", referencedColumnName = "id"))
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private Set<Function> functions;
 	

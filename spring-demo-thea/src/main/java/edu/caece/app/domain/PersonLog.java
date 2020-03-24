@@ -34,7 +34,7 @@ public class PersonLog {
 	private String message;
 		
 	public PersonLog() {
-		this.id = new PersonLogPK();
+		this.id = new PersonLogPK(); 
 		this.person = new Person();
 		id.setLogId(Hash.getId());
 	}

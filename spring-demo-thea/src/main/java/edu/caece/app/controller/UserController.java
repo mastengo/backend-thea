@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.config.Hash;
+import edu.caece.app.domain.AppResponse;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IUserRepository;
 
@@ -45,55 +46,95 @@ public class UserController {
 	}
 
 	@PostMapping("/users/create")
-	public ResponseEntity<String> save(@RequestBody User user) {
+	public ResponseEntity<Object> save(@RequestBody User user) {
 
 		boolean existe = repository.existsByUsername(user.getUsername());
-
+        AppResponse<User> result = new AppResponse<User>();
+		
 		if (!existe) {
+			
 			user.setPassword(Hash.sha1(user.getPassword()));
-			repository.save(user);
-			return new ResponseEntity<String>("el usuario ha sido creado!", HttpStatus.OK);
+			result.setSuccess(true);
+			result.setMessage(null);
+			result.setResult(repository.save(user));
+			result.getResult().setPassword(null); //Password null para que no la vea el front.
+			
+			return new ResponseEntity<>(result, HttpStatus.OK); //USER CREATED
 		}
 
-		return new ResponseEntity<String>("ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
-				HttpStatus.NOT_FOUND);
+		result.setSuccess(false);
+		result.setMessage("Usuario Existe"); //USER EXIST
+		result.setResult(null);
+				
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping("/users/update/{id}")
-	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable Long id) {
+
+	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable long id) {
 
 		Optional<User> _userData = repository.findById(id);
 		boolean existe_username = repository.existsByUsername(user.getUsername());
-
+		AppResponse<User> result = new AppResponse<User>();
+		
 		if (_userData.isPresent()) {
+			
 			User _user = _userData.get();
+			
 			if (!existe_username || _user.getUsername().equals(user.getUsername())) {
+				
 				_user.setFirstName(user.getFirstName());
 				_user.setLastName(user.getLastName());
 				_user.setEmail(user.getEmail());
 				_user.setUsername(user.getUsername());
 				_user.setRoles(user.getRoles());
-
-				return new ResponseEntity<>(repository.save(_user), HttpStatus.OK);
+				
+				result.setMessage(null);
+				result.setSuccess(true);
+				result.setResult(repository.save(_user));
+				result.getResult().setPassword(null); //Password null para que no la vea el front.
+				
+				return new ResponseEntity<>(result, HttpStatus.OK);
+				
 			} else {
-				return new ResponseEntity<>("ERROR: el usuario " + "\"" + user.getUsername() + "\"" + " ya existe",
-						HttpStatus.NOT_FOUND);
+				
+				//Username exists.
+				result.setMessage("User Exist");
+				result.setResult(null);
+				result.setSuccess(false);
+				return new ResponseEntity<>(result,	HttpStatus.OK);
 			}
 
 		} else {
-			return new ResponseEntity<>("Error: el usuario no fue encontrado!", HttpStatus.NOT_FOUND);
+			
+			result.setSuccess(false);
+			result.setMessage("User not Found"); //USER NOT FOUND.
+			result.setResult(null);
+			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
 	}
 
 	@DeleteMapping("/users/delete/{id}")
-	public ResponseEntity<String> delete(@PathVariable Long id) {
+	public ResponseEntity<String> delete(@PathVariable long id) {
 
 		Optional<User> _userData = repository.findById(id);
-
+		AppResponse<User> result = new AppResponse<User>();
+		
 		if (_userData.isPresent()) {
+			
 			repository.deleteById(id);
+			result.setSuccess(true);
+			result.setMessage("El usuario ha sido eliminado!"); //USER DELETED.
+			result.setResult(null);
+			
 			return new ResponseEntity<String>("El usuario ha sido eliminado!", HttpStatus.OK);
+			
 		} else {
+			
+			result.setSuccess(false);
+			result.setMessage("Error al eliminar. EL Usuario no se encuentra en la base de datos"); //USER NOT FOUND.
+			result.setResult(null);
+			
 			return new ResponseEntity<>("Usuario no encontrado!", HttpStatus.NOT_FOUND);
 		}
 	}

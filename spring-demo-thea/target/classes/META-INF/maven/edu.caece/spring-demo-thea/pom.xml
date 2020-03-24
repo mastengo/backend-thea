@@ -57,6 +57,27 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- INICIO POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.poi</groupId>
+		   <artifactId>poi-ooxml</artifactId>
+		   <version>3.9</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.xmlbeans</groupId>
+		   <artifactId>xmlbeans</artifactId>
+		   <version>2.6.0</version>
+		</dependency>
+		<dependency>
+		   <groupId>dom4j</groupId>
+		   <artifactId>dom4j</artifactId>
+		</dependency>
+		<!-- FIN POI -->
 	</dependencies>
 	<build>
 		<plugins>
