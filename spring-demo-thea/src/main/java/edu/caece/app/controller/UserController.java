@@ -87,7 +87,13 @@ public class UserController {
 				_user.setEmail(user.getEmail());
 				_user.setUsername(user.getUsername());
 				_user.setRoles(user.getRoles());
+				
+				user.getPhotos().forEach(x -> {
+					x.setUser(user);
+				});
+				
 				_user.setPhotos(user.getPhotos());
+				
 				
 				result.setMessage(null);
 				result.setSuccess(true);
