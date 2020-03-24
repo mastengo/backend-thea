@@ -60,7 +60,7 @@ public class UserController {
 	}
 
 	@PutMapping("/users/update/{id}")
-	public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable Long id) {
 
 		Optional<User> _userData = repository.findById(id);
 		boolean existe_username = repository.existsByUsername(user.getUsername());
