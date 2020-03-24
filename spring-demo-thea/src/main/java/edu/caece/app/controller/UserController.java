@@ -70,7 +70,6 @@ public class UserController {
 	}
 
 	@PutMapping("/users/update/{id}")
-
 	public ResponseEntity<Object> update(@RequestBody User user, @PathVariable long id) {
 
 		Optional<User> _userData = repository.findById(id);
