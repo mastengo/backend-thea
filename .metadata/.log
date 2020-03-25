@@ -1158,3 +1158,121 @@ Contains: Missing stax:stax-api:jar:javadoc:1.0.1
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:29:39.111
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.GKxZWHmj => OK
+!SESSION 2020-03-25 01:29:57.154 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.egit.core 1 0 2020-03-25 01:30:06.127
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY com.genuitec.eclipse.code.ui 1 0 2020-03-25 01:30:06.769
+!MESSAGE CodeMix Engine will be started momentarily to support development activities
+
+!ENTRY org.eclipse.jface 2 0 2020-03-25 01:30:08.618
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-03-25 01:30:08.618
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7475f57e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@514f2b5c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:25.665
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:25.774
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@2fe67135[org.springframework.tooling.boot.ls:1.10.0.201908130624(id=1001)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:25.933
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:26.375
+!MESSAGE Instantiating ReusableClasspathListenerHandler
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.705
+!MESSAGE Boot LS startup time from start to initialized: 8690ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.743
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.ZziyiohYisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.744
+!MESSAGE subscribing to classpath changes: sts4.classpath.ZziyiohY isBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.746
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.749
+!MESSAGE subsribers = {sts4.classpath.ZziyiohY=Send Classpath Notifications(867)}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.750
+!MESSAGE Sending initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.754
+!MESSAGE project spring-demo-thea ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.755
+!MESSAGE Sending initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.756
+!MESSAGE Preparing classpath changed notification spring-demo-thea
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.756
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.ZziyiohY => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.757
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.771
+!MESSAGE classpath=118 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.786
+!MESSAGE buffering callback sts4.classpath.ZziyiohY spring-demo-thea false 118
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.787
+!MESSAGE executing callback sts4.classpath.ZziyiohY 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:30:34.825
+!MESSAGE executing callback sts4.classpath.ZziyiohY SUCCESS [done]
+
+!ENTRY com.genuitec.eclipse.code.core 1 0 2020-03-25 01:30:56.581
+!MESSAGE Verifying CodeMix Engine runtime integrity...
+
+!ENTRY com.genuitec.eclipse.code.core 1 0 2020-03-25 01:30:56.586
+!MESSAGE IntegrityCheck: Artifacts located at: [C:\Users\mta\Desarrollo\eclipse\eclipse_ide_2019_06\artifacts.xml]
+
+!ENTRY com.genuitec.eclipse.code.core 1 0 2020-03-25 01:30:56.641
+!MESSAGE Integrity check PASSED
+
+!ENTRY com.genuitec.eclipse.code.core 1 0 2020-03-25 01:30:57.085
+!MESSAGE CodeMix Engine engine has been started
+
+!ENTRY org.eclipse.ui 2 2 2020-03-25 01:31:02.954
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:38:21.917
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.ZziyiohY
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:38:21.927
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.ZziyiohY
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:38:21.927
+!MESSAGE subsribers = null
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-03-25 01:38:21.929
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.ZziyiohY => OK
