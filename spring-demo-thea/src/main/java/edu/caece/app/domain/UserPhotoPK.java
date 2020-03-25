@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import edu.caece.app.config.Hash;
+
 @Embeddable
 public class UserPhotoPK implements Serializable {
 

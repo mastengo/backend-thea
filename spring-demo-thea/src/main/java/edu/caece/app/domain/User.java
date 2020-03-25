@@ -49,7 +49,7 @@ public class User {
 	private Set<UserLog> logs;
 	
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 
