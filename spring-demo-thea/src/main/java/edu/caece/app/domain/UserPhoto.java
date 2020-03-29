@@ -2,48 +2,46 @@ package edu.caece.app.domain;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import edu.caece.app.config.Hash;
 
 @Entity
 @Table(name = "users_photos")
 public class UserPhoto {
 
-	@EmbeddedId
-	private UserPhotoPK id;
+	@Id
+	@Column(name = "user_id")
+	private long userId;
 
-	@ManyToOne
-	@MapsId("user_id")
+	@OneToOne
+	@MapsId("userId")
 	@JoinColumn(name = "user_id")
 	@JsonIgnore
 	private User user;
-	
+
+	@Lob
 	@Column(name = "photo")
-	@Basic(optional = false, fetch = FetchType.EAGER)
-	@Lob()
+	@Basic(fetch = FetchType.LAZY)
 	private byte[] photo;
 
 	public UserPhoto() {
-		this.id = new UserPhotoPK();
-		id.setPhotoId(Hash.getId());
+		
 	}
 
-	public UserPhotoPK getId() {
-		return id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setId(UserPhotoPK id) {
-		this.id = id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public User getUser() {
@@ -52,7 +50,6 @@ public class UserPhoto {
 
 	public void setUser(User user) {
 		this.user = user;
-		this.id.setUserId(user.getId());
 	}
 
 	public byte[] getPhoto() {
