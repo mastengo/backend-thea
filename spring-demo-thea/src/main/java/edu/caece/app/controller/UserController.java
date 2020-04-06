@@ -32,6 +32,7 @@ import edu.caece.app.domain.User;
 import edu.caece.app.domain.UserPhoto;
 import edu.caece.app.repository.IUserPhotoRepository;
 import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.resources.Util;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -39,7 +40,7 @@ public class UserController {
 
 	// RUTA DENTRO DEL MISMO PROYECTO.
 	private static final String  PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
-	private static final String RUTA_CSV = "/src/main/resources/ff.jpg";
+	private static final String RUTA_CSV = "/src/main/resources/doc.pdf";
 	
 	@Autowired
 	private IUserRepository _repository;
@@ -54,7 +55,7 @@ public class UserController {
 
 		_repository.findAll().forEach(x -> {
 			x.setPassword(null);
-			x.setPhoto(_photoRepository.findByUserId(x.getId()));
+			//x.setPhoto(_photoRepository.findByUserId(x.getId()));
 			users.add(x);
 		});
 
@@ -106,9 +107,9 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		UserPhoto userPhoto = new UserPhoto();
-		userPhoto.setUserId(user.getId());
-		userPhoto.setPhoto(blob);
+//		UserPhoto userPhoto = new UserPhoto();
+//		userPhoto.setUserId(user.getId());
+//		userPhoto.setPhoto(Util.compressBytes(blob));
 		
 		
 		if (_userData.isPresent()) {
@@ -125,12 +126,20 @@ public class UserController {
 								
 				
 				
-				result.setMessage(null);
-				_photoRepository.save(userPhoto);
+				result.setMessage(null); 
+				
+				try {
+					_photoRepository.save(user.getPhoto());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
 				result.setResult(_repository.save(_user));
 				result.setSuccess(true);
 				result.getResult().setPassword(null); // Password null para que no la vea el front.
 
+				
+				
 				return new ResponseEntity<>(result, HttpStatus.OK);
 
 			} else {

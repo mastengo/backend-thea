@@ -1,5 +1,7 @@
 package edu.caece.app.domain;
 
+import java.util.Base64;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +35,7 @@ public class UserPhoto {
 	private byte[] photo;
 
 	public UserPhoto() {
-		
+
 	}
 
 	public long getUserId() {
@@ -53,10 +55,10 @@ public class UserPhoto {
 	}
 
 	public byte[] getPhoto() {
-		return photo;
+		return photo;// Base64.getUrlEncoder().encodeToString(photo);
 	}
 
 	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+		this.photo = photo; //Base64.getUrlDecoder().decode("url('" + photo + "')");
 	}
 }
