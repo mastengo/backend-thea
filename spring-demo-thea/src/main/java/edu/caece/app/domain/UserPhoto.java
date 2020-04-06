@@ -1,7 +1,5 @@
 package edu.caece.app.domain;
 
-import java.util.Base64;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

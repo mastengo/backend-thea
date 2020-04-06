@@ -29,10 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.AppResponse;
 import edu.caece.app.domain.User;
-import edu.caece.app.domain.UserPhoto;
 import edu.caece.app.repository.IUserPhotoRepository;
 import edu.caece.app.repository.IUserRepository;
-import edu.caece.app.resources.Util;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
