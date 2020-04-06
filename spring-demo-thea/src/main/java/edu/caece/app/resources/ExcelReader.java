@@ -29,7 +29,8 @@ import edu.caece.app.repository.IUserRepository;
 public class ExcelReader {
 
 	// RUTA DENTRO DEL MISMO PROYECTO
-	private static final String RUTA_CSV = "/src/main/resources/bd/TP-FINAL/DatosBD.xlsx";
+	private static final String  PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
+	private static final String RUTA_CSV = "/src/main/resources/DatosBD.xlsx";
 
 	private XSSFWorkbook _worbook = null;
 	private XSSFSheet _sheet = null;
@@ -65,7 +66,7 @@ public class ExcelReader {
 
 	private void readFile() {
 		try {
-			FileInputStream file = new FileInputStream(new File(RUTA_CSV));
+			FileInputStream file = new FileInputStream(new File(PATH + RUTA_CSV));
 			_worbook = new XSSFWorkbook(file);
 		} catch (Exception e) {
 			System.out.print(e.getMessage());

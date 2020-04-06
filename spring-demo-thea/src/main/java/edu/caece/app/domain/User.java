@@ -15,8 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "users")
@@ -42,35 +44,32 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<UserPhoto> photos;
+	@Transient
+	private UserPhoto photo;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserLog> logs;
-	
+
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 
 	public User() {
 		this.roles = new HashSet<Role>();
-		this.photos = new HashSet<UserPhoto>();
+		this.photo = new UserPhoto();
 	}
 
 	public User(String name, String... roles) {
 
 		String[] rl = new String[2];
 		this.roles = new HashSet<Role>();
-		this.photos = new HashSet<UserPhoto>();
+		this.photo = new UserPhoto();
 		this.username = name;
 
 		for (int i = 0; i < roles.length; i++) {
 			rl = roles[i].split("#");
 			this.roles.add(new Role(Long.parseLong(rl[0]), rl[1].toUpperCase()));
 		}
-
-		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
 	public long getId() {
@@ -130,12 +129,13 @@ public class User {
 		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-	public Set<UserPhoto> getPhotos() {
-		return photos;
+	public UserPhoto getPhoto() {
+		return photo;
 	}
 
-	public void setPhotos(Set<UserPhoto> photos) {
-		this.photos = photos;
+	public void setPhoto(UserPhoto photo) {
+
+		this.photo = photo;
 	}
 
 	public Set<UserLog> getLogs() {
