@@ -1,9 +1,9 @@
 package edu.caece.app.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
+//import java.io.File;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
+//import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,8 +37,8 @@ import edu.caece.app.repository.IUserRepository;
 public class UserController {
 
 	// RUTA DENTRO DEL MISMO PROYECTO.
-	private static final String  PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
-	private static final String RUTA_CSV = "/src/main/resources/doc.pdf";
+//	private static final String  PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
+//	private static final String RUTA_CSV = "/src/main/resources/doc.pdf";
 	
 	@Autowired
 	private IUserRepository _repository;
@@ -90,20 +90,20 @@ public class UserController {
 		Optional<User> _userData = _repository.findById(user.getId());
 		boolean existe_username = _repository.existsByUsername(user.getUsername());
 		AppResponse<User> result = new AppResponse<User>();
-		byte[] blob = null;
-		
-		//Vamos a levantar una imagen del disco.
-		try {
-			File myStream = new File(PATH + RUTA_CSV);
-			blob = Files.readAllBytes(myStream.toPath());
-					
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		byte[] blob = null;
+//		
+//		//Vamos a levantar una imagen del disco.
+//		try {
+//			File myStream = new File(PATH + RUTA_CSV);
+//			blob = Files.readAllBytes(myStream.toPath());
+//					
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		UserPhoto userPhoto = new UserPhoto();
 //		userPhoto.setUserId(user.getId());

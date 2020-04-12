@@ -1,8 +1,5 @@
 package edu.caece.app.resources;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -25,16 +22,16 @@ import edu.caece.app.repository.IPersonRepository;
 import edu.caece.app.repository.IRoleRepository;
 import edu.caece.app.repository.IUserRepository;
 
-@Service
 public class ExcelReader {
 
 	// RUTA DENTRO DEL MISMO PROYECTO
-	private static final String  PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
+	private static final String PATH = System.getProperty("user.dir"); // Obtiene Ruta del proyecto.
 	private static final String RUTA_CSV = "/src/main/resources/DatosBD.xlsx";
 
 	private XSSFWorkbook _worbook = null;
 	private XSSFSheet _sheet = null;
-
+	private FileInputStream _file;
+	
 	private static final int SOLAPA_ROLES = 0;
 	private static final int SOLAPA_FUNCIONES = 1;
 	private static final int SOLAPA_USUARIOS = 2;
@@ -43,14 +40,21 @@ public class ExcelReader {
 	private HashMap<Long, Role> _roles = new HashMap<Long, Role>();
 	private HashMap<Long, Function> _functions = new HashMap<Long, Function>();
 
-	@Autowired
+	
 	private IUserRepository _userRepository;
-	@Autowired
 	private IRoleRepository _roleRepository;
-	@Autowired
 	private IPersonRepository _personRepository;
-	@Autowired
 	private IFunctionRepository _functionRepository;
+
+	public ExcelReader(IUserRepository userRepository, IRoleRepository roleRepository,
+			IPersonRepository personRepository, IFunctionRepository functionRepository) {
+
+		_userRepository = userRepository;
+		_roleRepository = roleRepository;
+		_personRepository = personRepository;
+		_functionRepository = functionRepository;
+		
+	}
 
 	public void inicializeDB() {
 		try {
@@ -59,6 +63,7 @@ public class ExcelReader {
 			processUsers();
 			processFunctions();
 			processPersons();
+			closeFile();
 		} catch (Exception e) {
 			System.out.print("method inicializarBD :: " + e.getMessage());
 		}
@@ -66,8 +71,16 @@ public class ExcelReader {
 
 	private void readFile() {
 		try {
-			FileInputStream file = new FileInputStream(new File(PATH + RUTA_CSV));
-			_worbook = new XSSFWorkbook(file);
+			_file = new FileInputStream(new File(PATH + RUTA_CSV));
+			_worbook = new XSSFWorkbook(_file);
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+		}
+	}
+	
+	private void closeFile() {
+		try {
+		_file.close();
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 		}
@@ -101,12 +114,12 @@ public class ExcelReader {
 	}
 
 	private void processPersons() {
-		
+
 		try {
 			savePersons(readSheetPersons());
 		} catch (Exception e) {
 			e.getMessage();
-		} 
+		}
 	}
 
 	private ArrayList<User> readSheetUsers() {
@@ -220,7 +233,7 @@ public class ExcelReader {
 	}
 
 	private ArrayList<Person> readSheetPersons() {
-		
+
 		ArrayList<Person> persons = new ArrayList<Person>(); // Creacion de Lista de Personas
 		Person person = null;
 		Iterator<Row> rowIterator = null; // Obtiene Todas las Filas de Excel
@@ -228,40 +241,38 @@ public class ExcelReader {
 		Cell celda = null;
 		long id = 0;
 		Function function;
-		
 		Row row;
-		
+
 		_sheet = _worbook.getSheetAt(SOLAPA_PERSONAS);
 		rowIterator = _sheet.iterator();
 		rowIterator.next(); // Con Esto Descarto Primera Fila con Titulos
-		
+
 		while (rowIterator.hasNext()) {
-		
+
 			row = rowIterator.next(); // Recorro Fila del Excel
 			cellIterator = row.cellIterator(); // Se Obtienen celdas de fila del Excel
-			 
+
 			while (cellIterator.hasNext()) {
-				
+
 				person = new Person(); // Creo Objeto Persona
 				celda = cellIterator.next(); // Leo Celda Nombre del Excel
 				person.setFirstName(celda.getStringCellValue());
 				celda = cellIterator.next(); // Leo Celda Apellido del Excel
 				person.setLastName(celda.getStringCellValue());
 				celda = cellIterator.next(); // Leo Celda DNI del Excel
-				person.setDni((int) celda.getNumericCellValue());
+				person.setDni(Integer.parseInt(celda.getStringCellValue()));
 				celda = cellIterator.next(); // Leo Funcion del Excel
 				id = (long) celda.getNumericCellValue();
 				function = _functions.get(id);
 				person.getFunctions().add(function);
 				celda = cellIterator.next(); // Leo Celda Matricula del Excel
-				person.setRegistrationNumber((int) celda.getNumericCellValue());
+				person.setRegistrationNumber(Integer.parseInt(celda.getStringCellValue()));
 
 				persons.add(person);
 
-				
 			}
 		}
-		
+
 		return persons;
 	}
 
