@@ -1,8 +1,9 @@
 package edu.caece.app.controller;
 
-import java.util.Date;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -13,69 +14,57 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import edu.caece.app.service.AuthenticationManagerService;
-import edu.caece.app.service.JwtUserDetailsService;
+import edu.caece.app.Constantes;
 import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
-import edu.caece.app.domain.User;
-import edu.caece.app.domain.UserLog;
-import edu.caece.app.repository.IUserLogRepository;
-import edu.caece.app.repository.IUserRepository;
+import edu.caece.app.service.AutenticacionService;
+import edu.caece.app.service.JwtUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class JwtAuthenticationController {
-	
-	@Autowired
-	private AuthenticationManagerService authenticationManager;
-	
-	@Autowired
-	private IUserLogRepository repository_logs;
-	
-	@Autowired
-	private IUserRepository repository_users;
-	
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-	
-	@Autowired
-	private JwtUserDetailsService userDetailsService;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		
-		UserLog log = new UserLog();
-		
-		User user = repository_users.findByUsername(authenticationRequest.getUsername());
-				
-		log.setUser(user); //
-		log.setAccessDate(new Date());
-		log.setMessage("INGRESO AL SISTEMA");
-		
-		repository_logs.save(log);
-		
-		return ResponseEntity.ok(new JwtResponse(token, userDetails));
-	
-	}
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	private void authenticate(String username, String password) throws Exception {
-	
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		
-		} catch (DisabledException e) {
-			
-			throw new Exception("USER_DISABLED", e);
-		
-		} catch (BadCredentialsException e) {
-		
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
+  @Autowired
+  private AutenticacionService authenticationManager;
+
+  @Autowired
+  private JwtTokenUtil jwtTokenUtil;
+
+  @Autowired
+  private JwtUserDetailsService usuarioDetalleServicio;
+
+  @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+  public ResponseEntity<?> crearAutenticacionToken(@RequestBody JwtRequest autenticacionRequest)
+      throws Exception {
+    log.info(Constantes.INFO_TOKEN);
+    try {
+      autenticar(autenticacionRequest.getUsername(), autenticacionRequest.getPassword());
+      final UserDetails usuarioDetalle =
+          usuarioDetalleServicio.loadUserByUsername(autenticacionRequest.getUsername());
+      final String token = jwtTokenUtil.generateToken(usuarioDetalle);
+      return ResponseEntity.ok(new JwtResponse(token, usuarioDetalle));
+    } catch (Exception e) {
+      return new ResponseEntity<>(Constantes.ERROR_AUTENTICACION, HttpStatus.NOT_FOUND);
+    }
+  }
+
+  private void autenticar(String usuario, String password) throws Exception {
+    try {
+      log.info(Constantes.INFO_AUTENTICACION);
+      authenticationManager
+          .authenticate(new UsernamePasswordAuthenticationToken(usuario, password));
+    } catch (DisabledException e) {
+      throw new Exception(Constantes.ERROR_USUARIO_NO_AUTORIZADO, e);
+    } catch (BadCredentialsException e) {
+      throw new Exception(Constantes.ERROR_AUTENTICACION, e);
+    } catch (Exception e) {
+      throw new Exception(Constantes.ERROR_AUTENTICACION, e);
+    }
+  }
+
 }
