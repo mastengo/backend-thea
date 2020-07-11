@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.AppResponse;
 import edu.caece.app.domain.User;
-import edu.caece.app.repository.IUserPhotoRepository;
+import edu.caece.app.repository.IPhotoRepository;
 import edu.caece.app.repository.IUserRepository;
 
 @RestController
@@ -44,7 +44,7 @@ public class UserController {
 	private IUserRepository _repository;
 	
 	@Autowired
-	private IUserPhotoRepository _photoRepository;
+	private IPhotoRepository _photoRepository;
 
 	@RequestMapping(value = "/users/list", method = RequestMethod.GET)
 	public Collection<User> get() {
@@ -127,7 +127,7 @@ public class UserController {
 				result.setMessage(null); 
 				
 				try {
-					_photoRepository.save(user.getPhoto());
+					_photoRepository.saveAll(user.getPhoto());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

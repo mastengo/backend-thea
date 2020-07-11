@@ -20,8 +20,8 @@ import edu.caece.app.config.JwtTokenUtil;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
 import edu.caece.app.domain.User;
-import edu.caece.app.domain.UserLog;
-import edu.caece.app.repository.IUserLogRepository;
+import edu.caece.app.domain.UserIncome;
+import edu.caece.app.repository.IUserIncomeRepository;
 import edu.caece.app.repository.IUserRepository;
 
 @RestController
@@ -32,7 +32,7 @@ public class JwtAuthenticationController {
 	private AuthenticationManagerService authenticationManager;
 	
 	@Autowired
-	private IUserLogRepository repository_logs;
+	private IUserIncomeRepository repository_logs;
 	
 	@Autowired
 	private IUserRepository repository_users;
@@ -50,7 +50,7 @@ public class JwtAuthenticationController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
-		UserLog log = new UserLog();
+		UserIncome log = new UserIncome();
 		
 		User user = repository_users.findByUsername(authenticationRequest.getUsername());
 				

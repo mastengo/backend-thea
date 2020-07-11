@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,11 +43,12 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Transient
-	private UserPhoto photo;
+	@JoinTable(name = "users_photos", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "photo_id", referencedColumnName = "id"))
+	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER)
+	private Set<Photo> photos;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<UserLog> logs;
+	private Set<UserIncome> logs;
 
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER)
@@ -56,14 +56,14 @@ public class User {
 
 	public User() {
 		this.roles = new HashSet<Role>();
-		this.photo = new UserPhoto();
+		this.photos = new HashSet<Photo>();
 	}
 
 	public User(String name, String... roles) {
 
 		String[] rl = new String[2];
 		this.roles = new HashSet<Role>();
-		this.photo = new UserPhoto();
+		this.photos = new HashSet<Photo>();
 		this.username = name;
 
 		for (int i = 0; i < roles.length; i++) {
@@ -129,20 +129,20 @@ public class User {
 		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-	public UserPhoto getPhoto() {
-		return photo;
+	public Set<Photo> getPhoto() {
+		return photos;
 	}
 
-	public void setPhoto(UserPhoto photo) {
+	public void setPhoto(Set<Photo> photos) {
 
-		this.photo = photo;
+		this.photos = photos;
 	}
 
-	public Set<UserLog> getLogs() {
+	public Set<UserIncome> getLogs() {
 		return logs;
 	}
 
-	public void setLogs(Set<UserLog> logs) {
+	public void setLogs(Set<UserIncome> logs) {
 		this.logs = logs;
 	}
 

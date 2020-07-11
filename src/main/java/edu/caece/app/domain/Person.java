@@ -37,20 +37,22 @@ public class Person {
 	@Column(name="registration_number")	
 	private long registrationNumber;
 	
-	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-	private Set<PersonPhoto> photos;
+	@JoinTable(name = "persons_photos", joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "photo_id", referencedColumnName = "id"))
+	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	private Set<Photo> photos;
 	
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-	private Set<PersonLog> registrations;
+	private Set<PersonIncome> registrations;
 
 	@JoinTable(name = "persons_functions", joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "function_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.EAGER)
+			CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Set<Function> functions;
 	
 	public Person() {
-		this.photos = new HashSet<PersonPhoto>();
-		this.registrations = new HashSet<PersonLog>();
+		this.photos = new HashSet<Photo>();
+		this.registrations = new HashSet<PersonIncome>();
 		this.functions = new HashSet<Function>();
 	}
 
@@ -94,19 +96,19 @@ public class Person {
 		this.registrationNumber = registrationNumber;
 	}
 
-	public Set<PersonPhoto> getPhotos() {
+	public Set<Photo> getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(Set<PersonPhoto> photos) {
+	public void setPhotos(Set<Photo> photos) {
 		this.photos = photos;
 	}
 
-	public Set<PersonLog> getRegistrations() {
+	public Set<PersonIncome> getRegistrations() {
 		return registrations;
 	}
 
-	public void setRegistrations(Set<PersonLog> registrations) {
+	public void setRegistrations(Set<PersonIncome> registrations) {
 		this.registrations = registrations;
 	}
 
