@@ -41,6 +41,7 @@ public class User {
 	private String email;
 
 	@Column(name = "password", nullable = false)
+	@JsonIgnore
 	private String password;
 
 	@JoinTable(name = "users_photos", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "photo_id", referencedColumnName = "id"))
@@ -48,6 +49,7 @@ public class User {
 	private Set<Photo> photos;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<UserIncome> logs;
 
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
