@@ -128,7 +128,7 @@ public class UserController {
 				
 				try {
 					List<Photo> lista = _photoRepository.saveAll(user.getPhotos());	
-					user.setPhotos(new HashSet<Photo>(lista));
+					_user.setPhotos(new HashSet<Photo>(lista));
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

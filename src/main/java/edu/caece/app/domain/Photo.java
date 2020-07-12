@@ -15,13 +15,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name="photos")
-@Setter
-@Getter
 public class Photo {
 
 	@Id
@@ -39,8 +35,39 @@ public class Photo {
 	
 	@Lob
 	@Column(name = "photo")
-	@Basic(fetch = FetchType.LAZY)
 	private byte[] photo;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Set<Person> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
 	
 	
 }
