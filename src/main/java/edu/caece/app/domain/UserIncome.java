@@ -16,13 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name="users_incomes")
-@Getter
-@Setter
 public class UserIncome {
 
 	@Id
@@ -53,4 +49,46 @@ public class UserIncome {
 		this.eventType = eventType;
 		this.message = message;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public EventType getEventType() {
+		return eventType;
+	}
+
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Date getAccessDate() {
+		return accessDate;
+	}
+
+	public void setAccessDate(Date accessDate) {
+		this.accessDate = accessDate;
+	}
+	
+	
 }
