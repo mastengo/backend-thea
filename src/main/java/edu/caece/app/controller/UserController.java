@@ -7,11 +7,13 @@ package edu.caece.app.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-
+import org.hibernate.cfg.SetSimpleValueTypeSecondPass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.caece.app.config.Hash;
 import edu.caece.app.domain.AppResponse;
+import edu.caece.app.domain.Photo;
 import edu.caece.app.domain.User;
 import edu.caece.app.repository.IPhotoRepository;
 import edu.caece.app.repository.IUserRepository;
@@ -122,12 +125,11 @@ public class UserController {
 				_user.setUsername(user.getUsername());
 				_user.setRoles(user.getRoles());
 								
-				
-				
 				result.setMessage(null); 
 				
 				try {
-					_photoRepository.saveAll(user.getPhoto());
+					List<Photo> lista = _photoRepository.saveAll(user.getPhotos());	
+					user.setPhotos(new HashSet<Photo>(lista));
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

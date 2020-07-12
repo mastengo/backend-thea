@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.caece.app.service.AuthenticationManagerService;
 import edu.caece.app.service.JwtUserDetailsService;
 import edu.caece.app.config.JwtTokenUtil;
+import edu.caece.app.domain.EventType;
 import edu.caece.app.domain.JwtRequest;
 import edu.caece.app.domain.JwtResponse;
 import edu.caece.app.domain.User;
@@ -57,6 +58,7 @@ public class JwtAuthenticationController {
 		log.setUser(user); //
 		log.setAccessDate(new Date());
 		log.setMessage("INGRESO AL SISTEMA");
+		log.setEventType(EventType.ACCESO_OK);
 		
 		repository_logs.save(log);
 		
@@ -74,7 +76,16 @@ public class JwtAuthenticationController {
 			throw new Exception("USER_DISABLED", e);
 		
 		} catch (BadCredentialsException e) {
-		
+			UserIncome log = new UserIncome();
+			
+			User user = repository_users.findByUsername(username);
+					
+			log.setUser(user); //
+			log.setAccessDate(new Date());
+			log.setMessage("INGRESO AL SISTEMA");
+			log.setEventType(EventType.ACCESO_DENEGADO);
+			
+			repository_logs.save(log);
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}

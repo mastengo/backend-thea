@@ -129,11 +129,11 @@ public class User {
 		// this.roles.forEach(x -> x.getUsers().add(this));
 	}
 
-	public Set<Photo> getPhoto() {
+	public Set<Photo> getPhotos() {
 		return photos;
 	}
 
-	public void setPhoto(Set<Photo> photos) {
+	public void setPhotos(Set<Photo> photos) {
 
 		this.photos = photos;
 	}

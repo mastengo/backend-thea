@@ -39,7 +39,7 @@ public class Person {
 	
 	@JoinTable(name = "persons_photos", joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "photo_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+			CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private Set<Photo> photos;
 	
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
@@ -47,7 +47,7 @@ public class Person {
 
 	@JoinTable(name = "persons_functions", joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "function_id", referencedColumnName = "id"))
 	@ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.REFRESH,
-			CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+			CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private Set<Function> functions;
 	
 	public Person() {
